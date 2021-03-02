@@ -1,53 +1,68 @@
 package pages;
 
 import config.PageObject;
+import model.RoomObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HotelPage extends PageObject {
+
+    private Map<String, List<RoomObject>> roomGroupElements = new HashMap<>(); //inicjalizacja zmiennej przez konstruktor
 
     @FindBy(tagName = "h2")
     private WebElement hotelNameHeader;
 
-    @FindBy(xpath = "//*[@id = \"hp_book_now_button\"]")
-    private WebElement goToReservationButton;
+    @FindBy(className = "hprt-reservation-cta")
+    private WebElement reservationButton;
 
-    @FindBy(className = "hprt-roomtype-link")
+    @FindBy(id = "hprt-table")
+    private WebElement roomTable;
+
+    @FindBy(xpath = "//table[@id='hprt-table']/tbody/tr/td") //xpath, który szuka wszystkich tr, które są w td
+    private List<WebElement> tableCells;
+
+    @FindBy(className = "hprt-roomtype-icon-link")
     private List<WebElement> accomodationType;
 
-    @FindBy(xpath = "//class[@contains = \"hprt-roomtype-icon-link\" ]")
-    WebElement selectNumberOfBedsButton;
-
-    @FindBy(className = "bui-price-display__value")
-    WebElement roomPrice;
-
-    @FindBy(className = "hprt-reservation-cta")
-    WebElement reservationButton;
+    @FindBy(xpath = "//*[@id = \"hp_book_now_button\"]")
+    private WebElement bookSelectedRoomButton;
 
     public HotelPage(WebDriver driver, String hotelName) {
         super(driver);
-//        wait.until(ExpectedConditions.textToBePresentInElement(hotelNameHeader, hotelName));
+
     }
+
 
     public void clickReservationButton() {
         wait.until(ExpectedConditions.elementToBeClickable(reservationButton));
-        goToReservationButton.click();
+        reservationButton.click();
+        String roomType = null;
+        for (int i = 0; i < tableCells.size(); i++) {
+//        sprawdzamy, czy WebElement o podanym indeksie posiada atrybut o nazwie rowspan
+            if (tableCells.get(i).getAttribute("rowspan") != null) {
+                System.out.println(tableCells.get(i).getText());
+                roomType = tableCells.get(i).getText().split("\n")[0];
+                roomGroupElements.put(roomType, new ArrayList<>());
+//1. obiekt
+//2. tworzymy listę - bo może być wiele pokoi tego samego typu (~ten sam obiekt)
+            } else {
+                String classAttribute = tableCells.get(i).getAttribute("class");
+                if (classAttribute != null) {
+                    List<RoomObject> roomObjects = roomGroupElements.get(roomType);
+                    if (classAttribute.contains("occupancy")) {
+                        System.out.println(tableCells.get(i).getText());
+                        String numberOfGuests = tableCells.get(i).getText().split(":")[1].trim();
+                        RoomObject roomObject = new RoomObject();
+                        roomObject.setNumberOfGuests(numberOfGuests);
+                        roomObjects.add(roomObject);
+                    }
 
-    }
-
-    public void selectNumberOfBedsInChosenRoom(String roomName, int availableBudget) {
-        for (WebElement element : accomodationType) {
-            if ((element.toString()).contains(roomName)) {
-                if ((Integer.parseInt(String.valueOf(roomPrice))) > availableBudget) {
-                    Select numberOfBeds = new Select(selectNumberOfBedsButton);
-                    numberOfBeds.selectByIndex(2);
                 }
             }
-        }
-    }
-}
