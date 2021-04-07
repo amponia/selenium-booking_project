@@ -12,7 +12,7 @@ public class HotelListPageStep implements En {
     public HotelListPageStep(HomePageStep homePageStep) {
 
         Given("I click on hotel name {string}", (String hotelName) -> {
-            homePageStep.getHotelListPage().clickAvailabilityButtonByHotelName(hotelName);
+            homePageStep.getHotelListPage().clickAvailabilityByHotelName(hotelName);
         });
     }
 }

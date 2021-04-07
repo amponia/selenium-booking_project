@@ -42,6 +42,7 @@ public class HomePageStep implements En {
             hotelListPage = commonStep.getHomePage().clickSearchButton(cityName);
 
         });
+
     }
 
 

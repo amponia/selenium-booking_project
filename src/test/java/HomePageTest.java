@@ -17,14 +17,10 @@ public class HomePageTest {
         homePage.acceptCookies();
         homePage.enterCity("Tokyo");
         homePage.clickCheckInButton();
-
         homePage.selectCheckInDate(LocalDate.of(2021, 02, 15));
-//        selectCheckinDate bez Cucumbera - LocalDate.of bez .to String()
-//        homePage.selectCheckInDate(LocalDate.of(2021, 02, 15));
         homePage.clickCheckOutButton();
         homePage.clickCheckOutButton();
         homePage.selectCheckOutDate(LocalDate.of(2021, 02, 17));
-//        homePage.selectBusinessTripCheckbox();
         homePage.clickSearchButton("Tokyo");
     }
 }

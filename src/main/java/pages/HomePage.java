@@ -58,7 +58,7 @@ public class HomePage extends PageObject {
         checkInButton.click();
     }
 
-    //selectCheckInDate do Cucumbera (String date)
+
     public void selectCheckInDate(String date) {
         wait.until(ExpectedConditions.elementToBeClickable(nextMonthButton));
         for (WebElement element : dates) {
@@ -68,7 +68,6 @@ public class HomePage extends PageObject {
         }
     }
 
-    //    selectCheckInDate bez Cucumbera (LocalDate date)
     public void selectCheckInDate(LocalDate date) {
         wait.until(ExpectedConditions.elementToBeClickable(nextMonthButton));
         for (WebElement element : dates) {

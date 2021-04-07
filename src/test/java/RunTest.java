@@ -5,8 +5,10 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"pretty", "html:target/report.html", "json:target/report.json"},
         features = "classpath:features",
-        glue = "step"
+        glue = "step",
+        tags = "@test2"
 //, dryRun = true
+
 )
 public class RunTest {
 
