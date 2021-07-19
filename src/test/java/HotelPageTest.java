@@ -18,19 +18,19 @@ public class HotelPageTest {
         driver.get("https://booking.com");
         HomePage homePage = new HomePage(driver);
         homePage.acceptCookies();
-        homePage.enterCity("Warszawa");
+        homePage.enterCity("Tokio");
         homePage.clickCheckInButton();
-        homePage.selectCheckInDate(LocalDate.of(2021, 4, 16));
+        homePage.selectCheckInDate(LocalDate.of(2021, 5, 1));
         homePage.clickCheckOutButton();
         homePage.clickCheckOutButton();
-        homePage.selectCheckOutDate(LocalDate.of(2021, 4, 17));
-        HotelListPage hotelListPage = homePage.clickSearchButton("Warszawa");
-        HotelPage hotelPage = hotelListPage.clickAvailabilityByHotelName("Novotel");
+        homePage.selectCheckOutDate(LocalDate.of(2021, 5, 2));
+        HotelListPage hotelListPage = homePage.clickSearchButton("Tokio");
+        HotelPage hotelPage = hotelListPage.clickAvailabilityByHotelName("The Royal Park Hotel Tokyo Haneda");
         List<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         hotelPage.clickReservationButton();
-        hotelPage.selectRoomByTypeAndNumberOfGuests("Pokój typu Superior z łóżkiem typu queen-size",
-              "2", "3"  );
-        hotelPage.bookSelectedRoomButton("Novotel Warszawa Centrum");
+        hotelPage.selectRoomByTypeAndNumberOfGuests("Oferta specjalna - Pokój dwuosobowy",
+              "2", "1"  );
+        hotelPage.bookSelectedRoomButton("The Royal Park Hotel Tokyo Haneda");
     }
 }

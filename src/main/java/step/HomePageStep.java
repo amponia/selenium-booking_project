@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class HomePageStep implements En {
 
     @Getter
-    private HotelListPage hotelListPage; //ta globalna zmienna pozwala nam zapisywać zmienną cityName
+    private HotelListPage hotelListPage;
 
     public HomePageStep(CommonStep commonStep) {
 
@@ -46,5 +46,8 @@ public class HomePageStep implements En {
     }
 
 
+    public HotelListPage getHotelListPage() {
+        return hotelListPage;
+    }
 }
 

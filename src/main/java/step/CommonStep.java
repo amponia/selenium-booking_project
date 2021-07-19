@@ -23,7 +23,7 @@ public class CommonStep implements En {
         After("@Common", () -> {
             if (scenario.isFailed()) {
                 scenario.attach(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES),
-                        "image.png", scenario.getName());
+                        "image/png;base64", scenario.getName());
 
             }
 //            driver.quit();
@@ -31,7 +31,15 @@ public class CommonStep implements En {
         Given("I navigate to {string} using {string}", (String url, String browser) -> {
             driver = WebDriverFactory.valueOf(browser).create();
             driver.get(url);
-            this.homePage = new HomePage(getDriver());
+            this.homePage = new HomePage(driver);
         });
+    }
+
+    public HomePage getHomePage() {
+        return homePage;
+    }
+
+    public WebDriver getDriver() {
+        return driver;
     }
 }

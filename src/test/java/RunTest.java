@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
         features = "classpath:features",
         glue = "step",
         tags = "@test2"
+//        tags = "@test1 or @test2"
 //, dryRun = true
 
 )
